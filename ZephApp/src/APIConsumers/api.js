@@ -1,7 +1,9 @@
 ﻿// Auth API consumer
 
+const API_IP = 'localhost:8080';
+
 export async function login(email, password) {
-    const response = await fetch('https://your-api-url.com/Players/Auth/login', {
+    const response = await fetch(`http://${API_IP}/Players/Auth/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -22,7 +24,13 @@ export async function login(email, password) {
 }
 
 export async function register(userID, email, password, type, name, surname, birthday) {
-    const response = await fetch('https://your-api-url.com/Players/Auth/register', {
+
+    console.log(userID, email, password, type, name, surname, birthday);
+    console.log(`API IP: ${API_IP}`);
+    try {
+
+        console.log('About to call fetch');
+    const response = await fetch(`http://${API_IP}/Players/Auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -41,16 +49,20 @@ export async function register(userID, email, password, type, name, surname, bir
     if (!response.ok) {
         throw new Error('Registration failed');
     }
-
+    else{
     const data = await response.json();
     localStorage.setItem('jwt', data.token);
     return data;
+    }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 
 export async function checkAuth() {
     const token = localStorage.getItem('token');
-    const response = await fetch('https://your-api-url.com/Players/Auth', {
+    const response = await fetch(`http://${API_IP}/Players/Auth`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
@@ -67,11 +79,10 @@ export async function checkAuth() {
 
 // End of Auth API consumer
 
-
 // Start of Payments API consumer
 
 export async function addStripeCustomer(email, name, creditCardName, cardNumber, expirationYear, expirationMonth, cvc) {
-    const response = await fetch('https://your-api-url.com/Payment/customer/add', {
+    const response = await fetch(`http://${API_IP}/Payment/customer/add`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -99,7 +110,7 @@ export async function addStripeCustomer(email, name, creditCardName, cardNumber,
 }
 
 export async function addStripePayment(customerId, receiptEmail, description, currency, amount) {
-    const response = await fetch('https://your-api-url.com/Payment/payment/add', {
+    const response = await fetch(`http://${API_IP}/Payment/payment/add`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -127,19 +138,19 @@ export async function addStripePayment(customerId, receiptEmail, description, cu
 // Start of Players API consumer
 
 export async function getAllPlayers() {
-    const response = await fetch(`https://your-api-url.com/Players`);
+    const response = await fetch(`http://${API_IP}/Players`);
     const data = await response.json();
     return data;
 }
 
 export async function getPlayerById(id) {
-    const response = await fetch(`https://your-api-url.com/Players/${id}`);
+    const response = await fetch(`http://${API_IP}/Players/${id}`);
     const data = await response.json();
     return data;
 }
 
 export async function addPlayer(player) {
-    const response = await fetch(`https://your-api-url.com/Players`, {
+    const response = await fetch(`http://${API_IP}/Players`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -152,7 +163,7 @@ export async function addPlayer(player) {
 }
 
 export async function updatePlayer(id, player) {
-    const response = await fetch(`https://your-api-url.com/Players/${id}`, {
+    const response = await fetch(`http://${API_IP}/Players/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -165,7 +176,7 @@ export async function updatePlayer(id, player) {
 }
 
 export async function deletePlayer(id) {
-    const response = await fetch(`https://your-api-url.com/Players/${id}`, {
+    const response = await fetch(`http://${API_IP}/Players/${id}`, {
         method: 'DELETE'
     });
 

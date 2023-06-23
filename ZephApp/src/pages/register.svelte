@@ -13,7 +13,7 @@
         // Make sure user is at least 18 years old
         const userBirthday = new Date(birthday);
         const currentDate = new Date();
-        const age = currentDate.getFullYear() - userBirthday.getFullYear();
+        let age = currentDate.getFullYear() - userBirthday.getFullYear();
         const m = currentDate.getMonth() - userBirthday.getMonth();
         if (m < 0 || (m === 0 && currentDate.getDate() < userBirthday.getDate())) {
             age--;

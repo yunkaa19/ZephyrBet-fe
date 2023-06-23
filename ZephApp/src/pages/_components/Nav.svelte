@@ -9,7 +9,7 @@
         ["./profile", "Profile"],
         ["./logout", "Logout"]
     ]
-    
+
     let isAuthenticated = false;
 
     // Run this code whenever your component is updated
